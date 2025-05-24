@@ -1,44 +1,51 @@
 # main.py
-# Main program entry point
 
-from pet import VirtualPet
-from utils import input_choice, print_line
-import time
+from maze import Maze
+from player import Player
+
+def print_line():
+    print("=" * 40)
+
+def get_input(prompt, valid=None):
+    while True:
+        ans = input(prompt).strip().lower()
+        if valid is None or ans in valid:
+            return ans
+        print(f"Please enter one of {valid}.")
+
+def clear_screen():
+    print("\n" * 50)
 
 def main():
     print_line()
-    print("Welcome to Virtual Pet!")
-    name = input("What would you like to name your pet? ")
-    pet = VirtualPet(name)
-    print(f"\nYou adopted {pet.name}!")
+    print("Welcome to the Dark Maze!")
+    width, height = 12, 10
+    maze = Maze(width, height)
+    player = Player(*maze.start)
+    steps = 0
 
-    while pet.alive:
-        pet.status()
-        print("What do you want to do?")
-        print("1. Feed")
-        print("2. Play")
-        print("3. Sleep")
-        print("4. Do nothing")
-        print("5. Quit")
-
-        choice = input_choice("Enter your choice (1-5): ", ['1','2','3','4','5'])
-
-        if choice == '1':
-            pet.feed()
-        elif choice == '2':
-            pet.play()
-        elif choice == '3':
-            pet.sleep()
-        elif choice == '4':
-            print(f"You do nothing. Time passes...")
-        elif choice == '5':
-            print(f"Goodbye! {pet.name} will miss you!")
+    while True:
+        clear_screen()
+        maze.display(player, visibility=1)
+        player.status()
+        print_line()
+        move = get_input("Move (w/a/s/d) or q to quit: ", ["w","a","s","d","q"])
+        if move == "q":
+            print("Goodbye!")
             break
+        dy, dx = {"w":(-1,0), "a":(0,-1), "s":(1,0), "d":(0,1)}[move]
+        result = player.move(dy, dx, maze)
+        steps += 1
+        print(result)
+        if (player.y, player.x) == maze.exit:
+            print("Congratulations! You escaped the maze!")
+            print(f"Steps taken: {steps}")
+            break
+        if player.hp <= 0:
+            print("You lost all your health. Game Over!")
+            break
+        input("Press Enter to continue...")
 
-        pet.tick()
-        time.sleep(0.8)
-
-    print("Game over. Thanks for playing!")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+
