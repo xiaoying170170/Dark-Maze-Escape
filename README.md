@@ -1,21 +1,28 @@
-# Virtual Pet
+# Dark Maze Escape
 
-A simple interactive terminal game where you adopt and care for a virtual pet.
+A simple terminal-based maze game where you can only see one tile around your character. Move through the maze, find keys, unlock doors, avoid traps, and try to escape!
 
 ## Features
-- Name your pet  
-- Feed, play, or let your pet sleep  
-- Pet’s hunger, happiness, and energy change over time  
-- Keep your pet healthy, or it may leave!
+- Randomly generated maze with a single exit
+- Player can only see nearby tiles ("darkness" effect)
+- Collect keys to unlock doors
+- Avoid traps that reduce your health
+- Breakable ice walls for added challenge
 
 ## How to Run
-1. Place `main.py`, `pet.py`, and `utils.py` in the same folder  
-2. Run in terminal with:  
+1. Place `main.py`, `maze.py`, and `player.py` in the same folder
+2. Run the game with:
 
 ## File Overview
-- `main.py`: Game loop and user interface  
-- `pet.py`: VirtualPet class and pet behavior  
-- `utils.py`: Input and display helpers
+- `main.py`: Game entry and loop
+- `maze.py`: Maze generation and map elements
+- `player.py`: Player status and movement logic
 
 ## How to Play
-Choose actions each round to keep your pet alive and happy. If any status becomes critical, the game ends.
+- Use `w`, `a`, `s`, `d` keys to move up, left, down, and right
+- Pick up keys (`K`) to unlock doors (`D`)
+- Avoid traps (`^`) or lose health
+- Break through ice walls (`*`) by moving into them
+- Reach the exit (`E`) to win
+
+---
